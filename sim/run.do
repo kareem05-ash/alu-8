@@ -1,24 +1,17 @@
-# neede for CI termination errors
 onerror {quit -code 1}
 
-# removes old compiled versions
-if { [file exists work]} {
-    vdel -all -lib work
+set repo    [file normalize [pwd]]
+set sim_dir [file normalize [file join $repo sim]]
+
+if {[file exists $sim_dir/work]} {
+    vdel -lib $sim_dir/work -all
 }
+vlib $sim_dir/work
+vmap work $sim_dir/work
 
-# create work library
-vlib work
-vmap work work
-
-# compile all sv units
 vlog -sv \
-    $root/include/alu8_pkg.sv \
-    $root/rtl/dut.sv \
-    $root/tb/tb_top.sv
+    $repo/include/alu8_pkg.sv \
+    $repo/rtl/dut.sv \
+    $repo/tb/tb_top.sv
 
-# simulation tb unit
-vsim -c work.tb_top
-
-run -all
-
-quit -code 0
+vsim -c work.tb_top -do "run -all; quit -code 0"
