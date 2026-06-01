@@ -1,0 +1,23 @@
+name: ALU CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sim:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Show tool versions
+        run: |
+          which vsim
+          vsim -version
+
+      - name: Run simulation
+        run: |
+          cd sim
+          vsim -c -do run.do
