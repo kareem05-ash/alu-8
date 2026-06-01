@@ -12,9 +12,9 @@ vmap work work
 
 # compile all sv units
 vlog -sv \
-    include/alu8_pkg.sv \
-    rtl/dut.sv \
-    tb/tb_top.sv
+    $root/include/alu8_pkg.sv \
+    $root/rtl/dut.sv \
+    $root/tb/tb_top.sv
 
 # simulation tb unit
 vsim -c work.tb_top
